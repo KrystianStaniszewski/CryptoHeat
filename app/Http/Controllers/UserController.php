@@ -9,6 +9,11 @@ use Validator;
 
 class UserController extends Controller
 {
+    public function test()
+    {
+        return response()->json(['value'=>"c'est good"], 200);
+    }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
