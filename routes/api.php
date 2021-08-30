@@ -22,7 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //
-Route::get('test',[UserController::class, 'test']);
+Route::get('/test', function (Request $request) {
+    return 'test';
+});
+
 
 //Authentification
 Route::post('register',[UserController::class, 'register']);
