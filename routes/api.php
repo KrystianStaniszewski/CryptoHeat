@@ -29,6 +29,7 @@ Route::post('register',[UserController::class, 'register']);
 Route::post('login',[UserController::class, 'login']);
 Route::middleware('auth:api')->group(function(){
     Route::get('userDetail', [UserController::class,'userDetail']);
+    Route::put('user/update', [UserController::class,'userUpdate']);
 });
 
 Route::post('/workers/init', [WorkersController::class, 'initWorkers']);
@@ -37,6 +38,7 @@ Route::put('get/workers/url', [WorkersController::class, 'getURL']);
 Route::middleware('auth:api')->group(function() {
     Route::put('workers/connect', [WorkersController::class, 'workersConnect']);
     Route::get('/workers/{id}', [WorkersController::class, 'listWorkers']);
+    // Route::put('/workers/{id}/update', [WorkersController::class, 'updateWorkers']);
 });
 
 Route::middleware('auth:api')->group(function() {

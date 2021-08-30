@@ -9,13 +9,7 @@ use Validator;
 
 class UserController extends Controller
 {
-    public function test()
-    {
-        return response()->json(['value'=>"c'est good"], 200);
-    }
-
-    public function register(Request $request)
-    {
+    public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'FirstName' => 'required',
             'LastName' => 'required',
@@ -33,13 +27,13 @@ class UserController extends Controller
         $user->Pseudo = $request->Pseudo;
         $user->Password = $request->Password;
         $user->Password = Hash::make($user->Password);
-        $user->IsAdmin = 1;
+        $user->isAdmin = 0;
         $user->save();
 
         return response()->json(['success'], 201);
     }
 
-    public function login(Request $request){
+    public function login(Request $request) {
         $validator = Validator::make($request->all(), [
             'email' => 'required',
             'password' => 'required'
@@ -63,7 +57,53 @@ class UserController extends Controller
         }
     }
 
-    public function userDetail(){
+    public function userDetail() {
         return response()->json(['authenticated-user' => auth()->user()], 200);
     }
+
+    public function userUpdate(Request $request) {
+        $user = auth()->user();
+
+        if ($user) {
+
+            $validator = Validator::make($request->all(), [
+                'Pseudo' => 'regex:/^[a-zA-Z0-9_-]/|unique:user|string',
+                'Email' => 'email:rfc,dns|unique:user|string',
+                'Password' => 'string',
+                'FirstName' => 'string',
+                'LastName' => 'string',
+                'IsAdmin' => 'integer',
+            ]);
+            if ($validator->fails()) {
+                return response()->json(['message'=>"Bad Request", "code"=>10001, "data"=>$validator->errors()], 400);
+            }
+
+            if ($request->input('FirstName')){
+                $user->FirstName = $request->input('FirstName');
+            }
+            if ($request->input('LastName')){
+                $user->LastName = $request->input('LastName');
+            }
+            if ($request->input('IsAdmin')){
+                $user->isAdmin = $request->input('IsAdmin');
+            }
+            if ($request->input('Pseudo')){
+                $user->Pseudo = $request->input('Pseudo');
+            }
+            if ($request->input('Email')){
+                $user->email = $request->input('Email');
+            }
+            if ($request->input('Password')){
+                $user->Password = $request->input('Password');
+                $user['Password'] = bcrypt($user['Password']);
+            }
+
+            $user->save();
+
+            return response()->json(['success'], 201);
+        } else {
+            return response()->json(['message'=>'Unauthorized'], 401);
+        }
+    }
+    
 }
