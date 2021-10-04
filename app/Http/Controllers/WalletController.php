@@ -36,13 +36,32 @@ class WalletController extends Controller
         }
     }
 
-    public function listWallet(Request $request, $id)
+    public function listWallet()
     {
-        if (wallet::where("User_id", $id)) {
-            $list = wallet::where("User_id", $id)->get();
+        $user = auth()->user();
+
+        if (wallet::where("User_id", $user->id)) {
+            $list = wallet::where("User_id", $user->id)->get();
             return response()->json($list, 200);
         } else {
             return response()->json('Wallet Not Found', 404);
+        }
+    }
+
+    public function delete($id)
+    {
+        $user = auth()->user();
+
+        if (wallet::where('id', $id)) {
+            $wallet = wallet::where("id", $id)->first();
+            if ($wallet->User_id == $user->id) {
+                $wallet->delete();
+                return response()->json('Wallet has been deleted', 200);
+            } else {
+                return response()->json(['Unauthorized'], 401);
+            }
+        } else {
+            return response()->json('Wallet Not Found', 401);
         }
     }
 }

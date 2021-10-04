@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class gpu extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'Name', 'Brand', 'Ram', 'Ram_Brand',
     ];

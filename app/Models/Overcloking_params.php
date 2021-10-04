@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Overcloking_params extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'Core_clock', 'Memory_clock', 'Fan', 'Pw_limit', 'Delay', 'CoreVoltage', 'MemoryController_voltage', 'MemoryVoltage', 'Gpu_id',
     ];

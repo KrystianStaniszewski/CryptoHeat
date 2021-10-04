@@ -10,7 +10,7 @@ class workers extends Model
     public $timestamps = false;
     
     protected $fillable = [
-        'connexionKey', 'name','User_id', 'Hardware_id',
+        'connexionKey', 'name','User_id', 'temperature'
     ];
 
     protected $table = 'machine';

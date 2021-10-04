@@ -18,12 +18,8 @@ class Machine extends Migration
             $table->string('connexionKey', 150)->nullable();
             $table->string('name', 45)->nullable();
             $table->string('URL')->nullable();
-            $table->bigInteger('Hardware_id')->unsigned()->nullable();
+            $table->string('temperature')->nullable();
             $table->bigInteger('User_id')->unsigned()->nullable();
-        });
-
-        Schema::table('machine', function (Blueprint $table) {
-            $table->foreign('Hardware_id')->references('id')->on('hardware')->onDelete('cascade');
         });
 
         Schema::table('machine', function (Blueprint $table) {

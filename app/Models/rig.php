@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class rig extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'Name', 'Hardware', 'Hardware_id',
     ];

@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class hardware extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
-        'Gpu_id',
+        'Gpu_id', 'Machine_id'
     ];
 
     protected $table = 'hardware';
