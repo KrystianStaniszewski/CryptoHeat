@@ -68,9 +68,9 @@ class WorkersController extends Controller
         $worker = workers::where('connexionKey', $request->key)->first();
         $user = auth()->user();
 
-        if ($worker->User_id != NULL) {
-            return response()->json(['Not Available'], 201); 
-        }
+        //if ($worker->User_id != NULL) {
+        //    return response()->json(['Not Available'], 201); 
+        //}
         if ($worker && $user) {
             // $URL = $worker->URL;
             // try {
